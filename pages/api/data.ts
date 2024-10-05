@@ -4,21 +4,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  try {
-    const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://default-backend-url";
-    const response = await fetch(`${backendUrl}/data`);
+  const backendUrl =
+    process.env.NEXT_PUBLIC_BACKEND_URL ||
+    "https://api.github.com/users/hadley/orgs";
 
+  try {
+    // Fetch data from the backend URL (GitHub API in this case)
+    const response = await fetch(backendUrl);
+
+    // If the response is not OK, throw an error
     if (!response.ok) {
-      throw new Error("Service unavailable");
+      throw new Error("Failed to fetch data from the backend");
     }
 
     const data = await response.json();
+
+    // Return the data as JSON
     res.status(200).json(data);
   } catch (error) {
-    res.status(200).json({
-      message:
-        "Backend service is not available. This is a placeholder response.",
+    // Return a placeholder response in case of failure
+    res.status(500).json({
+      message: "Error fetching data. Fallback to placeholder data.",
     });
   }
 }
