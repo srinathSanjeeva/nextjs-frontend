@@ -1,5 +1,3 @@
-Here’s a sample `README.md` file in Markdown format for your Next.js project with Docker support. This file will guide users through setting up, running, and updating the Docker image.
-
 ---
 
 ## Next.js Frontend with Docker
